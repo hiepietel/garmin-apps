@@ -24,12 +24,6 @@ class simple_watch_faceView extends WatchUi.WatchFace {
   function onUpdate(dc as Dc) as Void {
     // Get and show the current time
     var clockTime = System.getClockTime();
-    // var timehourString = Lang.format("$1$$2$", [
-    //   clockTime.hour.format("%02d"),
-    //   clockTime.min.format("%02d"),
-    // ]);
-    
-   // var timeHourString = Lang.format(clockTime.hour.format("%02d"));
 
     var timeHourLabel = View.findDrawableById("TimeHourLabel") as Text;
     timeHourLabel.setText(clockTime.hour.format("%02d"));
@@ -55,54 +49,44 @@ class simple_watch_faceView extends WatchUi.WatchFace {
     // Call the parent onUpdate function to redraw the layout
     View.onUpdate(dc);
 
-
-    // dc.drawText(
-    //     dc.getWidth() / 2,                      // gets the width of the device and divides by 2
-    //     dc.getHeight() / 2,                     // gets the height of the device and divides by 2
-    //     Graphics.FONT_LARGE,                    // sets the font size
-    //     timeString,                          // the String to display
-    //     Graphics.TEXT_JUSTIFY_CENTER            // sets the justification for the text
-    //             );
-
-        var WIDTH = dc.getWidth();
-        var HEIGHT = dc.getHeight();
+    var WIDTH = dc.getWidth();
+    var HEIGHT = dc.getHeight();
 
     var ARCLENGTH = 150;
     var ARCWIDTH = 10;
     dc.setPenWidth(ARCWIDTH);
 
-
-    // if (getBodyBattery() != null) {
-    //     dc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_TRANSPARENT);
-    //     dc.drawArc(WIDTH / 2, HEIGHT / 2, HEIGHT / 2 - ARCWIDTH / 2, Graphics.ARC_CLOCKWISE, 180 + ARCLENGTH / 2, 180 + ARCLENGTH / 2 - ARCLENGTH * getStepsRatioThresholded() / 100);
-    // }
-
-    // Draw Steps Arc
-    dc.setColor(Graphics.COLOR_DK_RED, Graphics.COLOR_TRANSPARENT);
+    //hr
+    dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);
     dc.drawArc(WIDTH / 2, HEIGHT / 2, HEIGHT / 2 - ARCWIDTH / 2, Graphics.ARC_COUNTER_CLOCKWISE, 0 - ARCLENGTH / 2, 0 + ARCLENGTH / 2);
+
+    if (getHeartRate() != null && getHeartRate() > 0  ) {
+        dc.setColor(Graphics.COLOR_DK_RED, Graphics.COLOR_TRANSPARENT);
+        dc.drawArc(WIDTH / 2, HEIGHT / 2, HEIGHT / 2 - ARCWIDTH / 2, Graphics.ARC_COUNTER_CLOCKWISE, 0- ARCLENGTH / 2, 0 + ARCLENGTH / 2 - ARCLENGTH  * getHeartRateTreshold());
+    }
+
+
+//steps
+
 
     dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);
     dc.drawArc(WIDTH / 2, HEIGHT / 2, HEIGHT / 2 - ARCWIDTH / 2, Graphics.ARC_CLOCKWISE, 180 + ARCLENGTH / 2, 180 - ARCLENGTH / 2);
 
-
-
     if (getSteps() != null && getSteps() > 0 && getStepGoal() != null) {
-        dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);
-        dc.drawArc(WIDTH / 2, HEIGHT / 2, HEIGHT / 2 - ARCWIDTH / 2, Graphics.ARC_COUNTER_CLOCKWISE, 0 - ARCLENGTH / 2, 0 - ARCLENGTH / 2 + ARCLENGTH * getStepsRatioThresholded());
-
-        dc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_TRANSPARENT);
+        dc.setColor(Graphics.COLOR_DK_RED, Graphics.COLOR_TRANSPARENT);
         dc.drawArc(WIDTH / 2, HEIGHT / 2, HEIGHT / 2 - ARCWIDTH / 2, Graphics.ARC_CLOCKWISE, 180 + ARCLENGTH / 2, 180 + ARCLENGTH / 2 - ARCLENGTH * getStepsRatioThresholded());
     }
 
 
-    WIDTH = dc.getWidth();
-    
-    HEIGHT = dc.getHeight();
-
-//ARCWIDTH
+//floors arc
 
     dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);
     dc.drawArc(WIDTH / 2, HEIGHT / 2, HEIGHT / 2 - ARCWIDTH / 2 - 15, Graphics.ARC_CLOCKWISE, 180 + ARCLENGTH / 2, 180 - ARCLENGTH / 2);
+  
+    if (getFloors() != null && getFloors() > 0 && getFloorsClimbedGoal() != null) {
+          dc.setColor(Graphics.COLOR_DK_RED, Graphics.COLOR_TRANSPARENT);
+          dc.drawArc(WIDTH / 2, HEIGHT / 2, HEIGHT / 2 - ARCWIDTH / 2 - 15, Graphics.ARC_CLOCKWISE, 180 + ARCLENGTH / 2, 180 + ARCLENGTH / 2 - ARCLENGTH * getFloorsClimbedRatioThresholded());
+    }
   }
   // Called when this View is removed from the screen. Save the
   // state of this View here. This includes freeing resources from
@@ -117,10 +101,9 @@ class simple_watch_faceView extends WatchUi.WatchFace {
 
   function getDate() as String {
     var now = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
-    var dateString = Lang.format("$1$ $2$ $3$", [
-      now.day_of_week,
+    var dateString = Lang.format("$1$ $2$", [
       now.day,
-      now.month,
+      now.month
     ]);
     return dateString;
   }
@@ -131,7 +114,23 @@ class simple_watch_faceView extends WatchUi.WatchFace {
   }
 
   function getHeartRateString() as String {
-    return getHeartRate().format("%d");
+    return "HR-"+getHeartRate().format("%d");
+  }
+
+  function getHeartRateTreshold() as Float or Null {
+      var maxHeartRate = 192.0 as Float;
+      var heartRate = getHeartRate() as Float;
+      
+      
+      if (heartRate == null || maxHeartRate == null) {
+          return 1.0;
+      }
+
+      if (heartRate > maxHeartRate) {
+          heartRate = 191;
+      }
+
+      return 1.0 - (1.0 * heartRate / maxHeartRate);
   }
 
   function getSteps() as Number? {
@@ -143,7 +142,7 @@ class simple_watch_faceView extends WatchUi.WatchFace {
     if (steps == null) {
       return "-";
     }
-    return getSteps().format("%d");
+    return "S-"+getSteps().format("%d");
   }
 
   function getFloors() as Number? {
@@ -155,7 +154,7 @@ class simple_watch_faceView extends WatchUi.WatchFace {
     if (floors == null) {
       return "-";
     }
-    return getFloors().format("%d");
+    return "F-" + getFloors().format("%d");
   }
 
   function getBattery() as Float {
@@ -170,19 +169,37 @@ function getStepGoal() as Number or Null {
     return Toybox.ActivityMonitor.getInfo().stepGoal;
 }
 
-function getStepsRatioThresholded() as Float or Null {
-    var stepGoal = getStepGoal();
-    var steps = getSteps();
+  function getStepsRatioThresholded() as Float or Null {
+      var stepGoal = getStepGoal();
+      var steps = getSteps();
 
-    if (steps == null || stepGoal == null) {
-        return null;
-    }
+      if (steps == null || stepGoal == null) {
+          return null;
+      }
 
-    if (steps > stepGoal) {
-        steps = stepGoal;
-    }
+      if (steps > stepGoal) {
+          steps = stepGoal;
+      }
 
-    return 1.0 * steps / stepGoal;
-}
+      return 1.0 * steps / stepGoal;
+  }
 
+  function getFloorsClimbedGoal() as Number or Null {
+    return Toybox.ActivityMonitor.getInfo().floorsClimbedGoal;
+  }
+
+  function getFloorsClimbedRatioThresholded() as Float or Null {
+      var floorsClimbedGoal = getFloorsClimbedGoal();
+      var floors = getFloors();
+
+      if (floors == null || floorsClimbedGoal == null) {
+          return null;
+      }
+
+      if (floors > floorsClimbedGoal) {
+          floors = floorsClimbedGoal;
+      }
+
+      return 1.0 * floors / floorsClimbedGoal;
+  }
 }
