@@ -20,8 +20,8 @@ class animation_watch_faceApp extends Application.AppBase {
     // Return the initial view of your application here
     function getInitialView() as [Views] or [Views, InputDelegates] {
         //var goal = Application.getGoalType(Activity.GOAL_TYPE_STEP as Activity.GoalType);
-        return getGoalView(Application.GOAL_TYPE_STEPS as Application.GoalType);
-        //return [ new animation_watch_faceView() ];
+        //return getGoalView(Application.GOAL_TYPE_STEPS as Application.GoalType);
+        return [ new animation_watch_faceView() ];
     }
 
     function getGoalView(goalType as Application.GoalType) as [ WatchUi.View ] or Null {

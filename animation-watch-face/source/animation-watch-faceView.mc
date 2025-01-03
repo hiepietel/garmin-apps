@@ -46,6 +46,7 @@ class animation_watch_faceView extends WatchUi.WatchFace {
     // state of this View here. This includes freeing resources from
     // memory.
     function onHide() as Void {
+        //hammer.setBitmap(null);
     }
 
     // The user has just looked at their watch. Timers and animations may be started here.

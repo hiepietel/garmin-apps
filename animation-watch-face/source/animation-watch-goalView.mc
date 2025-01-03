@@ -3,6 +3,7 @@ import Toybox.Lang;
 import Toybox.System;
 import Toybox.WatchUi;
 import Toybox.Application;
+import Toybox.Attention;
 
 
 //https://www.flaticon.com
@@ -10,11 +11,10 @@ import Toybox.Application;
 
 class animation_watch_goalView extends WatchUi.View {
     
-    var i = 0;
-    var goalType ;
+    var i = 1;
+    var goalType;
 
-    var steps_red_blue_bitmap;
-    var steps_green_violet_bitmap ;
+    var bitmap;
     
     var screenWidth = System.getDeviceSettings().screenWidth;
     var screenHeight = System.getDeviceSettings().screenHeight;
@@ -24,11 +24,11 @@ class animation_watch_goalView extends WatchUi.View {
     //     View.initialize();
     // }
 
-    function initialize(goalType as Application.GoalType ) {
+    function initialize(achievedGoalType as Application.GoalType ) {
         View.initialize();
-        System.println("goalType: " + goalType);
+        System.println("goalType: " + achievedGoalType);
 
-        goalType = goalType;
+        goalType = achievedGoalType;
     }
 
     // Resources are loaded here
@@ -39,58 +39,75 @@ class animation_watch_goalView extends WatchUi.View {
         
         System.println("System.getDeviceSettings().screenWidth: " + System.getDeviceSettings().screenWidth);
         System.println("System.getDeviceSettings().screenHeight: " + System.getDeviceSettings().screenHeight);
+        System.println("Application.GOAL_TYPE_STEPS " + Application.GOAL_TYPE_STEPS);
 
-        steps_red_blue_bitmap = new WatchUi.Bitmap({
-            :rezId=>Rez.Drawables.footsteps_red_blue,
+        bitmap = new WatchUi.Bitmap({
+            :rezId => Rez.Drawables.footsteps_red_blue,
             :locX=> -100,
             :locY => -100
         });
 
-        steps_green_violet_bitmap = new WatchUi.Bitmap({
-            :rezId=>Rez.Drawables.fotsteps_green_violet,
-                        :locX=> -100,
-            :locY => -100
-        });
+        if(goalType == Application.GOAL_TYPE_STEPS) //0
+        {
+              bitmap.setBitmap(Rez.Drawables.footsteps_red_blue);  
+        }
+        else if(goalType == Application.GOAL_TYPE_FLOORS_CLIMBED)
+        {
+            bitmap.setBitmap(Rez.Drawables.footsteps_red_blue);  
+        }
+        else if(goalType == Application.GOAL_TYPE_ACTIVE_MINUTES){
+            bitmap.setBitmap(Rez.Drawables.footsteps_red_blue);  
+        }
+        else{
+
+        }
+
+
     }
 
     // onShow() is called when this View is brought to the foreground
     function onShow() {
 
-        var bitmapWidth = steps_red_blue_bitmap.getDimensions()[0];
-        var bitmapHeight = steps_red_blue_bitmap.getDimensions()[1];
+        var bitmapWidth = bitmap.getDimensions()[0];
+        var bitmapHeight = bitmap.getDimensions()[1];
 
-        steps_red_blue_bitmap.locX = screenWidth / 2 - bitmapWidth / 2;
-        steps_red_blue_bitmap.locY = screenHeight / 2 - bitmapHeight / 2;
+        System.println("bitmapWidth: " + bitmapWidth);
+        System.println("bitmapHeight: " + bitmapHeight);
 
-        //steps_red_blue_bitmap.draw(dc);    
+        bitmap.locX = screenWidth / 2 - bitmapWidth / 2;
+        bitmap.locY = screenHeight / 2 - bitmapHeight / 2;
+
+        //steps_red_blue_bitmap.draw(dc);
     }
 
     // onUpdate() is called periodically to update the View
     function onUpdate(dc) {
         
-        dc.clear();
-        dc
-        if(i % 2 == 0){
-            var bitmapWidth = steps_red_blue_bitmap.getDimensions()[0];
-            var bitmapHeight = steps_red_blue_bitmap.getDimensions()[1];
+        View.onUpdate(dc);
 
-            steps_red_blue_bitmap.locX = screenWidth / 2 - bitmapWidth / 2;
-            steps_red_blue_bitmap.locY = screenHeight / 2 - bitmapHeight / 2;
-
-            steps_red_blue_bitmap.draw(dc);
-
-            
-        }
-        else
+        if(goalType == Application.GOAL_TYPE_STEPS) //0
         {
-            var bitmapWidth = steps_green_violet_bitmap.getDimensions()[0];
-            var bitmapHeight = steps_green_violet_bitmap.getDimensions()[1];
+            if(i % 2 == 0){
 
-            steps_green_violet_bitmap.locX = screenWidth / 2 - bitmapWidth / 2;
-            steps_green_violet_bitmap.locY = screenHeight / 2 - bitmapHeight / 2;
+                bitmap.setBitmap(Rez.Drawables.fotsteps_green_violet);
+                bitmap.draw(dc);
+            }
+            else
+            {
+                bitmap.setBitmap(Rez.Drawables.footsteps_red_blue);
+                bitmap.draw(dc);
+            }
+        }else if (goalType == Application.GOAL_TYPE_FLOORS_CLIMBED){
 
-            steps_green_violet_bitmap.draw(dc);
+            //TODO
+
         }
+        else if(goalType == Application.GOAL_TYPE_ACTIVE_MINUTES){
+
+            //TODO
+
+        }
+
         i++;
     }
 
