@@ -1,0 +1,9 @@
+<drawables>
+    <bitmap id="LauncherIcon" filename="launcher_icon.png" />
+
+    <bitmap id="hammer" filename="hammer-tool-icon.png" dithering="none"/>
+    <bitmap id="motivation" filename="motivation.png" dithering="none"/>
+    
+    <bitmap id="footsteps_red_blue" filename="footsteps-red-blue-1.png" dithering="none"/>
+    <bitmap id="fotsteps_green_violet" filename="footsteps-green-violet-1.png" dithering="none"/>
+</drawables>
