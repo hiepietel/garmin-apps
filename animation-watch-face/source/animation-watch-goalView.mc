@@ -42,21 +42,21 @@ class animation_watch_goalView extends WatchUi.View {
         System.println("Application.GOAL_TYPE_STEPS " + Application.GOAL_TYPE_STEPS);
 
         bitmap = new WatchUi.Bitmap({
-            :rezId => Rez.Drawables.footsteps_red_blue,
+            :rezId => Rez.Drawables.FootstepsRedBlue,
             :locX=> -100,
             :locY => -100
         });
 
         if(goalType == Application.GOAL_TYPE_STEPS) //0
         {
-              bitmap.setBitmap(Rez.Drawables.footsteps_red_blue);  
+              bitmap.setBitmap(Rez.Drawables.FootstepsRedBlue);  
         }
         else if(goalType == Application.GOAL_TYPE_FLOORS_CLIMBED)
         {
-            bitmap.setBitmap(Rez.Drawables.footsteps_red_blue);  
+            bitmap.setBitmap(Rez.Drawables.FootstepsRedBlue);  
         }
         else if(goalType == Application.GOAL_TYPE_ACTIVE_MINUTES){
-            bitmap.setBitmap(Rez.Drawables.footsteps_red_blue);  
+            bitmap.setBitmap(Rez.Drawables.FootstepsRedBlue);  
         }
         else{
 
@@ -87,27 +87,47 @@ class animation_watch_goalView extends WatchUi.View {
 
         if(goalType == Application.GOAL_TYPE_STEPS) //0
         {
-            if(i % 2 == 0){
-
-                bitmap.setBitmap(Rez.Drawables.fotsteps_green_violet);
-                bitmap.draw(dc);
+            if(i % 2 == 0)
+            {
+                bitmap.setBitmap(Rez.Drawables.FootstepsGreenViolet);
             }
             else
             {
-                bitmap.setBitmap(Rez.Drawables.footsteps_red_blue);
-                bitmap.draw(dc);
+                bitmap.setBitmap(Rez.Drawables.FootstepsRedBlue);   
             }
-        }else if (goalType == Application.GOAL_TYPE_FLOORS_CLIMBED){
-
-            //TODO
-
         }
-        else if(goalType == Application.GOAL_TYPE_ACTIVE_MINUTES){
-
-            //TODO
-
+        else if (goalType == Application.GOAL_TYPE_FLOORS_CLIMBED)
+        {
+            if(i % 2 == 0)
+            {
+                bitmap.setBitmap(Rez.Drawables.GoUpstairsBlueOrange);
+            }
+            else
+            {
+                bitmap.setBitmap(Rez.Drawables.GoUpstairsGreenViolet);   
+            }
         }
-
+        else if(goalType == Application.GOAL_TYPE_ACTIVE_MINUTES)
+        {
+            if(i % 4 == 0)
+            {
+                bitmap.setBitmap(Rez.Drawables.AccessibilityGreen);   
+            }
+            else if(i % 4 == 1)
+            {
+            bitmap.setBitmap(Rez.Drawables.AccessibilityGreenRed);   
+            }
+            else if(i % 4 == 2)
+            {
+                bitmap.setBitmap(Rez.Drawables.AccessibilityRed);   
+            }
+            else
+            {
+                bitmap.setBitmap(Rez.Drawables.AccessibilityRedGreen);   
+            }
+        }
+        
+        bitmap.draw(dc);
         i++;
     }
 

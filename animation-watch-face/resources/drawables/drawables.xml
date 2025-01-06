@@ -1,9 +1,17 @@
 <drawables>
-    <bitmap id="LauncherIcon" filename="launcher_icon.png" />
+    <bitmap id="LauncherIcon" filename="unicorn_launcher.png" />
 
     <bitmap id="hammer" filename="hammer-tool-icon.png" dithering="none"/>
-    <bitmap id="motivation" filename="motivation.png" dithering="none"/>
     
-    <bitmap id="footsteps_red_blue" filename="footsteps-red-blue-1.png" dithering="none"/>
-    <bitmap id="fotsteps_green_violet" filename="footsteps-green-violet-1.png" dithering="none"/>
+    <bitmap id="FootstepsRedBlue" filename="footsteps-red-blue.png" dithering="none"/>
+    <bitmap id="FootstepsGreenViolet" filename="footsteps-green-violet.png" dithering="none"/>
+
+    <bitmap id="GoUpstairsBlueOrange" filename="go-upstairs-blue-orange.png" dithering="none"/>
+    <bitmap id="GoUpstairsGreenViolet" filename="go-upstairs-green-violet.png" dithering="none"/>
+
+    <bitmap id="AccessibilityRed" filename="accessibility_red.png" dithering="none"/>
+    <bitmap id="AccessibilityGreen" filename="accessibility_green.png" dithering="none"/>
+    <bitmap id="AccessibilityRedGreen" filename="accessibility_green_red.png" dithering="none"/>
+    <bitmap id="AccessibilityGreenRed" filename="accessibility_red_green.png" dithering="none"/>
+
 </drawables>
