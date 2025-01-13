@@ -1,4 +1,12 @@
-<layout id="MainLayout">
-    <!-- <label x="center" y="5" text="@Strings.prompt" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" /> -->
-    <bitmap id="id_yellow_pope" x="center" y="center" filename="../drawables/yellow_pope.png" />
-</layout>
+<resources>
+   
+    <layout id="MainLayout">
+        <label x="center" y="5" text="@Strings.prompt" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" />
+        <!-- <bitmap id="id_yellow_pope" x="center" y="center" filename="../drawables/yellow_pope.png" /> -->
+    </layout>
+    <layout id="Alert">
+        <label x="center" y="center" text="21:37" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" />
+        <bitmap id="id_yellow_pope" x="center" y="center" filename="../drawables/yellow_pope.png" />
+    </layout>
+
+</resources>
