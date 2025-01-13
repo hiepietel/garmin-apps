@@ -8,18 +8,18 @@ class Delegate extends Ui.InputDelegate
     hidden var view;
 
     function initialize(view) {
-    InputDelegate.initialize();
-    self.view = view;
+        InputDelegate.initialize();
+        self.view = view;
     }
 
     function onKey(evt) {
-    view.dismiss();
-    return true;
+        view.dismiss();
+        return true;
     }
 
     function onTap(evt) {
-    view.dismiss();
-    return true;
+        view.dismiss();
+        return true;
     }
 }
 
@@ -32,6 +32,13 @@ class SimpleDeviceAppAlert extends Ui.View
     hidden var fgcolor;
     hidden var bgcolor;
 
+
+    var vibeData =
+    [
+        new Attention.VibeProfile(250, 2000)
+    ];
+
+
     function initialize() {
         View.initialize();
 
@@ -39,18 +46,24 @@ class SimpleDeviceAppAlert extends Ui.View
         font = Gfx.FONT_MEDIUM;
         fgcolor = Gfx.COLOR_BLACK;
         bgcolor = Gfx.COLOR_WHITE;
-        timeout = 15000;
+        timeout = 30 * 1000;
 
         timer = new Timer.Timer();
     }
 
     function onLayout(dc) as Void {
         setLayout(Rez.Layouts.Alert(dc));
+
+        Sys.println("Alert: on Layout");
     }
 
 
     function onShow() {
         timer.start(method(:dismiss), timeout, false);
+
+        if (Attention has :vibrate) {
+            Attention.vibrate(vibeData);
+        }
     }
 
     function onHide() {
@@ -60,6 +73,8 @@ class SimpleDeviceAppAlert extends Ui.View
     function onUpdate(dc) {
 
         View.onUpdate(dc);
+
+
         // var tWidth = dc.getTextWidthInPixels(text, font);
         // var tHeight = dc.getFontHeight(font);
 

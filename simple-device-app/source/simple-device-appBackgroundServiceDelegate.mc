@@ -17,18 +17,6 @@ class SimpleDeviceAppBackgroundServiceDelegate extends Toybox.System.ServiceDele
         Sys.println("bg exit: "+ts);
         //just return the timestamp
 
-        // var alert = new SimpleDeviceAppAlert({
-        //     :timeout => 2000,
-        //     :font => Gfx.FONT_MEDIUM,
-        //     :text => "onPreviousPage",
-        //     :fgcolor => Gfx.COLOR_RED,
-        //     :bgcolor => Gfx.COLOR_WHITE
-        // });
-
-
-
-
-
         Background.exit(ts);
     }
 }

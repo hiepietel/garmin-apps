@@ -59,12 +59,9 @@ class simple_device_appApp extends App.AppBase {
     }
 
     // Return the initial view of your application here
-    function getInitialView() as [Views] or [Views, InputDelegates] {
-    	
+    function getInitialView() as [Views] or [Views, InputDelegates] {	
         Sys.println("getInitialView");
-//
 
-        
 		//register for temporal events if they are supported
     	if(Toybox.System has :ServiceDelegate) {
     		canDoBG=true;
@@ -98,8 +95,7 @@ class simple_device_appApp extends App.AppBase {
     		Sys.println("****background not available on this device****");
     	}
 
-
-        return [ new simple_device_appView(), new simple_device_appDelegate() ];
+        return [ new simple_device_appView(), new SimpleDeviceAppDelegate() ];
     }
 
     function onBackgroundData(data) {
@@ -108,7 +104,6 @@ class simple_device_appApp extends App.AppBase {
     	var ts=sysClockTime.hour+":"+sysClockTime.min.format("%02d");
         Sys.println("onBackgroundData="+data+" "+counter+" at "+ts);
         bgdata=data;
-
 
         var alert = new SimpleDeviceAppAlert();
 
@@ -130,17 +125,22 @@ class simple_device_appApp extends App.AppBase {
             :minute  => 37 
         };
 
+        var georgitanTime = Gregorian.moment(options);
         var popeTimeValue = Gregorian.moment(options).value();
         var popeTimeMoment = new Time.Moment(popeTimeValue);
+
+        var timezone = new Time.Duration(sysClockTime.timeZoneOffset);;
+        popeTimeMoment.add(timezone);
 
         if(now.hour>= 21 && now.min >= 37){
             var oneDay = new Time.Duration(Gregorian.SECONDS_PER_DAY); 
             popeTimeMoment.add(oneDay);
         }
-
+        Sys.println("georgitanTime: " + georgitanTime);
         Sys.println("now: " + now);
         Sys.println("popeTimeValue: " + popeTimeValue);
         Sys.println("popeTimeMoment: " + popeTimeMoment);
+        Sys.println("timezone: " + timezone);
 
         Background.registerForTemporalEvent(popeTimeMoment);
 
