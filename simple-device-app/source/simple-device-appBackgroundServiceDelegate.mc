@@ -17,6 +17,8 @@ class SimpleDeviceAppBackgroundServiceDelegate extends Toybox.System.ServiceDele
         Sys.println("bg exit: "+ts);
         //just return the timestamp
 
+        Background.requestApplicationWake("Launch Cool App?");
+
         Background.exit(ts);
     }
 }

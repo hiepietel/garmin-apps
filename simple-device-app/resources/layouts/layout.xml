@@ -2,7 +2,7 @@
    
     <layout id="MainLayout">
         <label x="center" y="center" text="@Strings.prompt" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" />
-        <!-- <bitmap id="id_yellow_pope" x="center" y="center" filename="../drawables/yellow_pope.png" /> -->
+        <bitmap id="id_yellow_pope" x="center" y="center" filename="../drawables/yellow_pope.png" />
     </layout>
     <layout id="Alert">       
         <bitmap id="id_yellow_pope" x="center" y="center" filename="../drawables/yellow_pope_3.png" />
