@@ -5,7 +5,7 @@
         <bitmap id="id_yellow_pope" x="center" y="center" filename="../drawables/yellow_pope.png" />
     </layout>
     <layout id="Alert">       
-        <bitmap id="id_yellow_pope" x="center" y="center" filename="../drawables/yellow_pope_3.png" />
+        <bitmap id="id_yellow_pope_3" x="center" y="center" filename="../drawables/yellow_pope_3.png" />
         <label x="center" y="50" text="@Strings.pope_hour" color="Graphics.COLOR_DK_GRAY" justification="Graphics.TEXT_JUSTIFY_CENTER" font="Graphics.FONT_SYSTEM_LARGE"/>
     </layout>
 
