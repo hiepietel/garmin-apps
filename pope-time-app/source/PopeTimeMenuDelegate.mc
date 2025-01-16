@@ -1,8 +1,8 @@
 import Toybox.Lang;
 import Toybox.System;
-import Toybox.WatchUi;
+using Toybox.WatchUi as Ui;
 
-class PopeTimeMenuDelegate extends WatchUi.Menu2InputDelegate {
+class PopeTimeMenuDelegate extends Ui.Menu2InputDelegate {
 
     function initialize() {
         Menu2InputDelegate.initialize();
@@ -10,6 +10,13 @@ class PopeTimeMenuDelegate extends WatchUi.Menu2InputDelegate {
 
     function onSelect(item) {
         System.println(item.getId());
+
+        if(item.getId() == "showPopeAnimation"){
+            
+            Ui.pushView( new PopeTimeNotificationView(), null, Ui.SLIDE_UP);
+            Ui.requestUpdate();
+            System.println("showPopeAnimation");
+        } 
     }
 
     // function onMenuItem(item as Symbol) as Void {

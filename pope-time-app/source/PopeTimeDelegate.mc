@@ -1,5 +1,6 @@
 import Toybox.Lang;
 
+using Toybox.Background;
 using Toybox.WatchUi as Ui;
 using Toybox.Time.Gregorian as GregTime;
 
@@ -12,27 +13,41 @@ class PopeTimeDelegate extends Ui.BehaviorDelegate {
     function onMenu() as Boolean {
 
 
-        var nextPopeNotificationTimeValue = Background.getTemporalEventRegisteredTime().value();
-        var lastPopeNotificationTimeValue = Background.getLastTemporalEventTime().value();
-
+    
         var menu = new WatchUi.Menu2({:title=>"JP II Settings"});
 
-        menu.addItem(
-            new MenuItem(
-                "next notification time",
-                ParseNumberDateToDateTimeString(nextPopeNotificationTimeValue),
-                "getTemporalEventRegisteredTime",
+        if(Background.getTemporalEventRegisteredTime() != null){
+            var lastPopeNotificationTimeValue = Background.getTemporalEventRegisteredTime().value();
+            menu.addItem(
+                new MenuItem(
+                    "next notification time",
+                    ParseNumberDateToDateTimeString(lastPopeNotificationTimeValue),
+                    "getTemporalEventRegisteredTime",
+                    {}
+                )
+            );
+        }
+
+        if(Background.getLastTemporalEventTime() != null){
+            var lastPopeNotificationTimeValue = Background.getLastTemporalEventTime().value();
+            menu.addItem(
+                new MenuItem(
+                    "last notification time",
+                    ParseNumberDateToDateTimeString(lastPopeNotificationTimeValue),
+                    "getLastTemporalEventTime",
+                    {}
+                )
+            );
+        }
+        var item = new MenuItem(
+                "showPopeAnimation",
+                "",
+                "showPopeAnimation",
                 {}
-            )
-        );
-        menu.addItem(
-            new MenuItem(
-                "last notification time",
-                ParseNumberDateToDateTimeString(lastPopeNotificationTimeValue),
-                "getLastTemporalEventTime",
-                {}
-            )
-        );
+            );
+        //item.setIcon(Rez.Drawables.LauncherIcon); sincle API 3.4.0
+        menu.addItem(item);
+
 
         WatchUi.pushView(menu, new PopeTimeMenuDelegate(), WatchUi.SLIDE_UP);
         return true;

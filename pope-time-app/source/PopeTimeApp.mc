@@ -26,17 +26,17 @@ class PopeTimeApp extends App.AppBase {
                 :year => now.year, 
                 :month => now.month, 
                 :day => now.day,
-                :hour => 21,
-                :minute  => 37 
+                :hour => now.hour,
+                :minute  => now.min + 10
             };
 
             var popeTimeValue = GregTime.moment(options).value();
             var popeTimeMoment = new Time.Moment(popeTimeValue);
 
-            if(now.hour >= 21 && now.min >= 37){
-               var oneDay = new Time.Duration(GregTime.SECONDS_PER_DAY); 
-               popeTimeMoment.add(oneDay);
-            }
+            // if(now.hour >= 21 && now.min >= 37){
+            //    var oneDay = new Time.Duration(GregTime.SECONDS_PER_DAY); 
+            //    popeTimeMoment.add(oneDay);
+            // }
 
     		Background.registerForTemporalEvent(popeTimeMoment);
 
