@@ -65,7 +65,7 @@ class PopeTimeNotificationView extends Ui.View
 
     }
 
-    private function dismiss() {
+    function dismiss() {
         bitmap = null;
         Ui.popView(SLIDE_IMMEDIATE);
     }
