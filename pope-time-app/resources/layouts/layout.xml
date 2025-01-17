@@ -1,5 +1,0 @@
-<resources>
-    <layout id="MainLayout">
-        <bitmap id="YellowPope" x="center" y="center" filename="../drawables/yellow_pope_240_240.png" />
-    </layout>
-</resources>

@@ -13,8 +13,8 @@ class PopeTimeMenuDelegate extends Ui.Menu2InputDelegate {
 
         if(item.getId() == "showPopeAnimation"){
             
-            Ui.pushView( new PopeTimeNotificationView(), null, Ui.SLIDE_UP);
-            Ui.requestUpdate();
+            // Ui.switchToView( new PopeTimeNotificationView(), null, Ui.SLIDE_IMMEDIATE);
+            // Ui.requestUpdate();
             System.println("showPopeAnimation");
         } 
     }

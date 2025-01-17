@@ -12,9 +12,6 @@ class PopeTimeNotificationView extends Ui.View
     hidden var bitmapTimer;
     hidden var bitmapTimeout;
 
-    var screenWidth = System.getDeviceSettings().screenWidth;
-    var screenHeight = System.getDeviceSettings().screenHeight;
-
     function initialize() {
         View.initialize();
     
@@ -26,25 +23,15 @@ class PopeTimeNotificationView extends Ui.View
     }
 
     function onLayout(dc) as Void {
-        //setLayout(Rez.Layouts.Notification(dc));
 
-        bitmap = new Ui.Bitmap({
-            :rezId => Rez.Drawables.YellowPopeInverted,
-            :locX=> -100,
-            :locY => -100
-        });
+        CreateBitmap();
 
-        Sys.println("Alert: on Layout");
+        //Sys.println("Alert: on Layout");
     }
 
     function onShow() {
+        
         timer.start(method(:dismiss), timeout, false);
-
-        var bitmapWidth = bitmap.getDimensions()[0];
-        var bitmapHeight = bitmap.getDimensions()[1];
-
-        bitmap.locX = screenWidth / 2 - bitmapWidth / 2;
-        bitmap.locY = screenHeight / 2 - bitmapHeight / 2;
 
         bitmapTimer.start(method(:requestUpdate), bitmapTimeout, true);
         // if (Attention has :vibrate) {
@@ -53,11 +40,15 @@ class PopeTimeNotificationView extends Ui.View
     }
 
     function onHide() {
+        bitmap = null;
         timer.stop();
         bitmapTimer.stop();
     }
 
     function onUpdate(dc) {
+
+        dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK); 
+        dc.clear(); 
 
         invertedBitmp = invertedBitmp == false;
 
@@ -74,11 +65,36 @@ class PopeTimeNotificationView extends Ui.View
 
     }
 
-    function requestUpdate(){
+    private function dismiss() {
+        bitmap = null;
+        Ui.popView(SLIDE_IMMEDIATE);
+    }
+
+    private function requestUpdate(){
         Ui.requestUpdate();
     }
 
-    function dismiss() {
-        Ui.popView(SLIDE_IMMEDIATE);
-    }
+    private function CreateBitmap(){
+        if(bitmap == null){
+            bitmap = new Ui.Bitmap({
+                :rezId => Rez.Drawables.YellowPope,
+                :locX=> -100,
+                :locY => -100
+            });
+
+            var bitmapDimmensions = bitmap.getDimensions();
+            if(bitmapDimmensions[0] != null && bitmapDimmensions[1] != null){          
+                var systemSettins = System.getDeviceSettings();
+
+                var screenWidth = systemSettins.screenWidth;
+                var screenHeight = systemSettins.screenHeight;
+                
+                var bitmapWidth = bitmapDimmensions[0];
+                var bitmapHeight = bitmapDimmensions[1];
+
+                bitmap.locX = screenWidth / 2 - bitmapWidth / 2;
+                bitmap.locY = screenHeight / 2 - bitmapHeight / 2;
+            }
+        }
+    }  
 }

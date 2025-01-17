@@ -12,8 +12,6 @@ class PopeTimeDelegate extends Ui.BehaviorDelegate {
 
     function onMenu() as Boolean {
 
-
-    
         var menu = new WatchUi.Menu2({:title=>"JP II Settings"});
 
         if(Background.getTemporalEventRegisteredTime() != null){
@@ -39,21 +37,20 @@ class PopeTimeDelegate extends Ui.BehaviorDelegate {
                 )
             );
         }
-        var item = new MenuItem(
-                "showPopeAnimation",
-                "",
-                "showPopeAnimation",
-                {}
-            );
         //item.setIcon(Rez.Drawables.LauncherIcon); sincle API 3.4.0
-        menu.addItem(item);
-
 
         WatchUi.pushView(menu, new PopeTimeMenuDelegate(), WatchUi.SLIDE_UP);
         return true;
     }
 
-   function ParseNumberDateToDateTimeString(number){
+    function onSelect()
+    {
+        Ui.pushView( new PopeTimeNotificationView(), null, Ui.SLIDE_IMMEDIATE);
+        return true;
+    }
+
+
+   private function ParseNumberDateToDateTimeString(number){
         
         var timeValue = new Time.Moment(number);
         var info = GregTime.utcInfo(timeValue, Time.FORMAT_SHORT);
