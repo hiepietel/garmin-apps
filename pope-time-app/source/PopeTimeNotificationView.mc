@@ -9,17 +9,17 @@ class PopeTimeNotificationView extends Ui.View
     hidden var timeout;
     hidden var bitmap;
     hidden var timer; 
-    hidden var bitmapTimer;
+    hidden var framerateTimer;
     hidden var bitmapTimeout;
 
     function initialize() {
         View.initialize();
     
         timeout = 20 * 1000;
-        bitmapTimeout = 1 * 1000;
+        bitmapTimeout = 0.5 * 1000;
 
         timer = new Timer.Timer();
-        bitmapTimer = new Timer.Timer();
+        framerateTimer = new Timer.Timer();
     }
 
     function onLayout(dc) as Void {
@@ -33,7 +33,7 @@ class PopeTimeNotificationView extends Ui.View
         
         timer.start(method(:dismiss), timeout, false);
 
-        bitmapTimer.start(method(:requestUpdate), bitmapTimeout, true);
+        framerateTimer.start(method(:requestUpdate), bitmapTimeout, true);
         // if (Attention has :vibrate) {
         //     Attention.vibrate(vibeData);
         // }
@@ -42,7 +42,7 @@ class PopeTimeNotificationView extends Ui.View
     function onHide() {
         bitmap = null;
         timer.stop();
-        bitmapTimer.stop();
+        framerateTimer.stop();
     }
 
     function onUpdate(dc) {
@@ -50,7 +50,7 @@ class PopeTimeNotificationView extends Ui.View
         dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK); 
         dc.clear(); 
 
-        invertedBitmp = invertedBitmp == false;
+
 
         Sys.println(invertedBitmp);
 
@@ -60,6 +60,8 @@ class PopeTimeNotificationView extends Ui.View
         else{
             bitmap.setBitmap(Rez.Drawables.YellowPope);
         }
+
+        invertedBitmp = invertedBitmp == false;
 
         bitmap.draw(dc);
 

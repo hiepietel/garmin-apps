@@ -37,6 +37,23 @@ class PopeTimeDelegate extends Ui.BehaviorDelegate {
                 )
             );
         }
+
+        if(Background.getTemporalEventRegisteredTime() != null){
+            var now = Time.now().value();
+            var future = Background.getTemporalEventRegisteredTime().value();
+
+
+            var difference = Lang.format("$1$", [(future - now)/60]);
+            // var difference = Lang.format("$1$-", future - now);
+            menu.addItem(
+                new MenuItem(
+                    "minutes to next notification",
+                    difference,
+                    "difference",
+                    {}
+                )
+            );
+        }
         //item.setIcon(Rez.Drawables.LauncherIcon); sincle API 3.4.0
 
         WatchUi.pushView(menu, new PopeTimeMenuDelegate(), WatchUi.SLIDE_UP);

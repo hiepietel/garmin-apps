@@ -33,15 +33,14 @@ class PopeTimeApp extends App.AppBase {
             var popeTimeValue = GregTime.moment(options).value();
             var popeTimeMoment = new Time.Moment(popeTimeValue);
 
-            if(now.hour >= 21 && now.min >= 37 - 5) // temp event can be set up 5 min before execution
+            if(now.hour >= 22 || (now.hour >= 21 && now.min >= 37 - 5)) // temp event can be set up 5 min before execution
             { 
                var oneDay = new Time.Duration(GregTime.SECONDS_PER_DAY); 
-               popeTimeMoment.add(oneDay);
+               popeTimeMoment = popeTimeMoment.add(oneDay);
             }
 
     		Background.registerForTemporalEvent(popeTimeMoment);
 
-            Sys.println(Background.getTemporalEventRegisteredTime());
         }
         else {
     		Sys.println("****background not available on this device****");
