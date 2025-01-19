@@ -20,7 +20,7 @@ class PopeTimeApp extends App.AppBase {
 
         if(Toybox.System has :ServiceDelegate) 
         {
-            var now = GregTime.info(Time.now(), Time.FORMAT_MEDIUM);
+            var now = GregTime.utcInfo(Time.now(), Time.FORMAT_MEDIUM);
 
             var options = {
                 :year => now.year, 
@@ -32,6 +32,12 @@ class PopeTimeApp extends App.AppBase {
 
             var popeTimeValue = GregTime.moment(options).value();
             var popeTimeMoment = new Time.Moment(popeTimeValue);
+
+            var myTime = System.getClockTime();
+            if(myTime.timeZoneOffset != null){
+                var offsetDuration = new Time.Duration(myTime.timeZoneOffset ); 
+                popeTimeMoment = popeTimeMoment.subtract(offsetDuration);
+            }
 
             if(now.hour >= 22 || (now.hour >= 21 && now.min >= 37 - 5)) // temp event can be set up 5 min before execution
             { 

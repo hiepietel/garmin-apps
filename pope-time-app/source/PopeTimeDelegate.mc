@@ -39,15 +39,16 @@ class PopeTimeDelegate extends Ui.BehaviorDelegate {
         }
 
         if(Background.getTemporalEventRegisteredTime() != null){
+            
             var now = Time.now().value();
             var future = Background.getTemporalEventRegisteredTime().value();
+            var differenceHours = (future - now) / 60 / 60;
+            var differenceMinutes = (future - now) / 60 % 60;
+            var difference = Lang.format("$1$h $2$m", [differenceHours, differenceMinutes]);
 
-
-            var difference = Lang.format("$1$", [(future - now)/60]);
-            // var difference = Lang.format("$1$-", future - now);
             menu.addItem(
                 new MenuItem(
-                    "minutes to next notification",
+                    "time to next notification",
                     difference,
                     "difference",
                     {}
@@ -70,6 +71,13 @@ class PopeTimeDelegate extends Ui.BehaviorDelegate {
    private function ParseNumberDateToDateTimeString(number){
         
         var timeValue = new Time.Moment(number);
+
+        // var myTime = System.getClockTime();
+        //     if(myTime.timeZoneOffset != null){
+        //         var offsetDuration = new Time.Duration(myTime.timeZoneOffset ); 
+        //         popeTimeMoment = popeTimeMoment.subtract(offsetDuration);
+        //     }
+
         var info = GregTime.utcInfo(timeValue, Time.FORMAT_SHORT);
 
         var formattedDate = Lang.format("$1$-$2$-$3$ $4$:$5$", [
