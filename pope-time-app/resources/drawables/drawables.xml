@@ -2,4 +2,5 @@
     <bitmap id="LauncherIcon" filename="yellow_pope_40_40.png" />
     <bitmap id="YellowPope" filename="yellow_pope_240_240.png" />
     <bitmap id="YellowPopeInverted" filename="yellow_pope_240_240_inverted.png" />
+    <bitmap id="Thuglife" filename="thuglife_200_160.png" />
 </drawables>

@@ -72,11 +72,11 @@ class PopeTimeDelegate extends Ui.BehaviorDelegate {
         
         var timeValue = new Time.Moment(number);
 
-        // var myTime = System.getClockTime();
-        //     if(myTime.timeZoneOffset != null){
-        //         var offsetDuration = new Time.Duration(myTime.timeZoneOffset ); 
-        //         popeTimeMoment = popeTimeMoment.subtract(offsetDuration);
-        //     }
+        var myTime = System.getClockTime();
+            if(myTime.timeZoneOffset != null){
+                var offsetDuration = new Time.Duration(myTime.timeZoneOffset ); 
+                timeValue = timeValue.add(offsetDuration);
+            }
 
         var info = GregTime.utcInfo(timeValue, Time.FORMAT_SHORT);
 

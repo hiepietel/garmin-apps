@@ -39,10 +39,19 @@ class PopeTimeApp extends App.AppBase {
                 popeTimeMoment = popeTimeMoment.subtract(offsetDuration);
             }
 
-            if(now.hour >= 22 || (now.hour >= 21 && now.min >= 37 - 5)) // temp event can be set up 5 min before execution
+            if(now.hour >= 22 || (now.hour >= 21 && now.min >= 37))
             { 
                var oneDay = new Time.Duration(GregTime.SECONDS_PER_DAY); 
                popeTimeMoment = popeTimeMoment.add(oneDay);
+            }
+
+            if(now.hour == 21 && now.min >= 32 && now.min < 37){
+                return; //cannot create background event 5 minut before the execution
+            }
+
+            if(Background.getTemporalEventRegisteredTime() != null && Background.getTemporalEventRegisteredTime() == popeTimeMoment)
+            {
+                return;
             }
 
     		Background.registerForTemporalEvent(popeTimeMoment);
