@@ -9,7 +9,7 @@ using Toybox.Time.Gregorian as GregTime;
 (:background)
 class PopeTimeApp extends App.AppBase {
 
-    hidden var startFromBackground = false; 
+    //hidden var startFromBackground = false; 
 
     function initialize() {
         AppBase.initialize();
@@ -60,8 +60,6 @@ class PopeTimeApp extends App.AppBase {
         else {
     		Sys.println("****background not available on this device****");
     	}
-
-
     }
 
     // onStop() is called when your application is exiting
@@ -70,21 +68,25 @@ class PopeTimeApp extends App.AppBase {
 
     // Return the initial view of your application here
     function getInitialView() as [Ui.Views] or [Ui.Views, Ui.InputDelegates] {
-        if(startFromBackground == true){
-            startFromBackground = false;
-            return [new PopeTimeNotificationView()]; 
-        }
+ 
+        // if(startFromBackground == true){
+        //     startFromBackground = false;
+        //     return [new PopeTimeNotificationView()]; 
+        // }
 
         return [ new PopeTimeView(), new PopeTimeDelegate() ];
     }
 
-    function onBackgroundData(data) {
-        if(data instanceof Lang.Boolean){
-            Sys.println(data);
-            startFromBackground = true;
-        }
+    function onBackgroundData(data) 
+    { 
+        // startFromBackground = true;
+        // Ui.pushView( new PopeTimeNotificationView(), null, Ui.SLIDE_IMMEDIATE);
 
-        Ui.requestUpdate();
+       // Ui.requestUpdate();
+    }
+
+    function onHide() {
+       //startFromBackground = false; 
     }
 
     function getServiceDelegate(){

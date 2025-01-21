@@ -19,7 +19,7 @@ class PopeTimeNotificationView extends Ui.View
     function initialize() {
         View.initialize();
     
-        timeout = 6 * 1000;
+        timeout = 3 * 1000;
         bitmapTimeout = 0.25 * 1000;
 
         timer = new Timer.Timer();
@@ -112,16 +112,11 @@ class PopeTimeNotificationView extends Ui.View
 
             }
 
-
-
-
             thuglifeBitmap.locY += 10;
 
             bitmap.draw(dc);
             thuglifeBitmap.draw(dc);
         }
-
-
     }
 
     function dismiss() {
@@ -130,7 +125,7 @@ class PopeTimeNotificationView extends Ui.View
             popeAnimationStep ++;
         }
         else if(popeAnimationStep == 1){
-            timer.start(method(:dismiss), timeout, false);
+            timer.start(method(:dismiss), 2 * timeout, false);
             popeAnimationStep ++;
         }
         else

@@ -12,6 +12,6 @@ class PopeTimeServiceDelegate extends Toybox.System.ServiceDelegate {
 
     function onTemporalEvent(){
         Background.requestApplicationWake("It's time. A u ready to see him?");
-        Background.exit(true);
+        Background.exit(null);
     }
 }
