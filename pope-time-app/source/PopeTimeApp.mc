@@ -11,63 +11,26 @@ class PopeTimeApp extends App.AppBase {
 
     //hidden var startFromBackground = false; 
 
-    function initialize() {
+    function initialize() 
+    {
         AppBase.initialize();
     }
 
     // onStart() is called on application start up
-    function onStart(state as Lng.Dictionary?) as Void {
-
-        if(Toybox.System has :ServiceDelegate) 
-        {
-            var now = GregTime.utcInfo(Time.now(), Time.FORMAT_MEDIUM);
-
-            var options = {
-                :year => now.year, 
-                :month => now.month, 
-                :day => now.day,
-                :hour => 21,
-                :minute  => 37
-            };
-
-            var popeTimeValue = GregTime.moment(options).value();
-            var popeTimeMoment = new Time.Moment(popeTimeValue);
-
-            var myTime = System.getClockTime();
-            if(myTime.timeZoneOffset != null){
-                var offsetDuration = new Time.Duration(myTime.timeZoneOffset ); 
-                popeTimeMoment = popeTimeMoment.subtract(offsetDuration);
-            }
-
-            if(now.hour >= 22 || (now.hour >= 21 && now.min >= 37))
-            { 
-               var oneDay = new Time.Duration(GregTime.SECONDS_PER_DAY); 
-               popeTimeMoment = popeTimeMoment.add(oneDay);
-            }
-
-            if(now.hour == 21 && now.min >= 32 && now.min < 37){
-                return; //cannot create background event 5 minut before the execution
-            }
-
-            if(Background.getTemporalEventRegisteredTime() != null && Background.getTemporalEventRegisteredTime() == popeTimeMoment)
-            {
-                return;
-            }
-
-    		Background.registerForTemporalEvent(popeTimeMoment);
-
-        }
-        else {
-    		Sys.println("****background not available on this device****");
-    	}
+    function onStart(state as Lng.Dictionary?) as Void 
+    {
+        var creator = new PopeTimeBackgroundServiceCreator();
+        creator.create();
     }
 
     // onStop() is called when your application is exiting
-    function onStop(state as Lng.Dictionary?) as Void {
+    function onStop(state as Lng.Dictionary?) as Void 
+    {
     }
 
     // Return the initial view of your application here
-    function getInitialView() as [Ui.Views] or [Ui.Views, Ui.InputDelegates] {
+    function getInitialView() as [Ui.Views] or [Ui.Views, Ui.InputDelegates] 
+    {
  
         // if(startFromBackground == true){
         //     startFromBackground = false;
@@ -85,16 +48,19 @@ class PopeTimeApp extends App.AppBase {
        // Ui.requestUpdate();
     }
 
-    function onHide() {
+    function onHide() 
+    {
        //startFromBackground = false; 
     }
 
-    function getServiceDelegate(){
+    function getServiceDelegate()
+    {
         return [new PopeTimeServiceDelegate()];
     }
 
 }
 
-function getApp() as PopeTimeApp {
+function getApp() as PopeTimeApp 
+{
     return App.getApp() as PopeTimeApp;
 }

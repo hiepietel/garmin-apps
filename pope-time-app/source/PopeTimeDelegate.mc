@@ -10,7 +10,8 @@ class PopeTimeDelegate extends Ui.BehaviorDelegate {
         BehaviorDelegate.initialize();
     }
 
-    function onMenu() as Boolean {
+    function onMenu() as Boolean 
+    {
 
         var menu = new WatchUi.Menu2({:title=>"JP II Settings"});
 
@@ -68,8 +69,8 @@ class PopeTimeDelegate extends Ui.BehaviorDelegate {
     }
 
 
-   private function ParseNumberDateToDateTimeString(number){
-        
+   private function ParseNumberDateToDateTimeString(number)
+   {
         var timeValue = new Time.Moment(number);
 
         var myTime = System.getClockTime();

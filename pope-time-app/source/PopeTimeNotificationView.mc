@@ -5,7 +5,7 @@ using Toybox.System as Sys;
 
 class PopeTimeNotificationView extends Ui.View
 {
-    hidden var invertedBitmp = false;
+    hidden var invertedBitmapCounter = 0;
     hidden var timeout;
     hidden var bitmap;
     hidden var bitmapRezId;
@@ -20,7 +20,7 @@ class PopeTimeNotificationView extends Ui.View
         View.initialize();
     
         timeout = 3 * 1000;
-        bitmapTimeout = 0.25 * 1000;
+        bitmapTimeout = 0.05 * 1000;
 
         timer = new Timer.Timer();
         framerateTimer = new Timer.Timer();
@@ -76,21 +76,21 @@ class PopeTimeNotificationView extends Ui.View
         dc.clear(); 
 
         if(popeAnimationStep == 0){
-            if (invertedBitmp == true){
+            if (invertedBitmapCounter % 10 == 0 ){
                 UpdateBitmap(Rez.Drawables.YellowPopeInverted);
             }
-            else{
+            else if (invertedBitmapCounter % 10 == 5){
                 UpdateBitmap(Rez.Drawables.YellowPope);
             }
 
-            invertedBitmp = invertedBitmp == false;
+            invertedBitmapCounter ++;
 
             bitmap.draw(dc);
         }
         else{
             CreateBitmap(Rez.Drawables.YellowPope);
 
-            var offset = 5;
+            var offset = 1;
 
              var thuglifeBitmapDimmensions = thuglifeBitmap.getDimensions();
             if(thuglifeBitmapDimmensions[1] != null){
