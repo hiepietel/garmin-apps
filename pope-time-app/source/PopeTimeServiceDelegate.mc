@@ -17,7 +17,7 @@ class PopeTimeServiceDelegate extends Toybox.System.ServiceDelegate {
         var creator = new PopeTimeBackgroundServiceCreator();
         creator.create();
 
-        Background.requestApplicationWake("It's time. A u ready to see him?");
+        Background.requestApplicationWake("It is 21:37 o'clock. A u ready to see him?");
         Background.exit(null);
     }
 }
