@@ -36,9 +36,9 @@ class PopeTimeView extends Ui.View {
         var dcWidth = dc.getWidth();
         var dcHeight = dc.getHeight();
 
-        var arcLength = 30;
-        var arcWidth = 4;
-        var arcOffset = 25;
+        var arcLength = 40;
+        var arcWidth = 5;
+        var arcOffset = 30;
         dc.setPenWidth(arcWidth);
 
         if(hintColorCounter % 2 == 0){
