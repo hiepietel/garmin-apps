@@ -4,9 +4,13 @@ using Toybox.WatchUi as Ui;
 class PopeTimeView extends Ui.View {
 
     hidden var bitmap = null;
+    hidden var hintColorCounter = 0;
+    hidden var timer; 
 
     function initialize() {
         View.initialize();
+
+        timer = new Timer.Timer();
     }
 
     // Load your resources here
@@ -19,6 +23,8 @@ class PopeTimeView extends Ui.View {
     // loading resources into memory.
     function onShow() as Void {
         CreateBitmap();
+
+        timer.start(method(:requestUpdate), 700, true);
     }
 
     // Update the view
@@ -27,6 +33,27 @@ class PopeTimeView extends Ui.View {
         View.onUpdate(dc);
 
         bitmap.draw(dc);
+        var dcWidth = dc.getWidth();
+        var dcHeight = dc.getHeight();
+
+        var arcLength = 30;
+        var arcWidth = 4;
+        var arcOffset = 25;
+        dc.setPenWidth(arcWidth);
+
+        if(hintColorCounter % 2 == 0){
+            dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);
+        }
+        else{
+            dc.setColor(Graphics.COLOR_YELLOW, Graphics.COLOR_TRANSPARENT);
+        }
+
+        //dc.setColor(Graphics.COLOR_DK_RED, Graphics.COLOR_TRANSPARENT);
+        dc.drawArc(dcWidth / 2, dcHeight / 2, dcHeight / 2 - arcWidth / 2,
+                Graphics.ARC_CLOCKWISE, 0 + arcLength / 2 + arcOffset,
+                0 - arcLength / 2 + arcOffset);
+
+        hintColorCounter++;
     }
 
     // Called when this View is removed from the screen. Save the
@@ -36,6 +63,10 @@ class PopeTimeView extends Ui.View {
         bitmap = null;
     }
 
+    protected function requestUpdate()
+    {   
+        Ui.requestUpdate();     
+    }
     private function CreateBitmap(){
         if(bitmap == null){
             bitmap = new Ui.Bitmap({

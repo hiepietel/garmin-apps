@@ -19,7 +19,7 @@ class PopeTimeNotificationView extends Ui.View
     function initialize() {
         View.initialize();
     
-        timeout = 3 * 1000;
+        timeout = 2 * 1000;
         bitmapTimeout = 0.05 * 1000;
 
         timer = new Timer.Timer();
@@ -88,7 +88,7 @@ class PopeTimeNotificationView extends Ui.View
             bitmap.draw(dc);
         }
         else{
-            CreateBitmap(Rez.Drawables.YellowPope);
+            UpdateBitmap(Rez.Drawables.YellowPope);
 
             var offset = 1;
 
