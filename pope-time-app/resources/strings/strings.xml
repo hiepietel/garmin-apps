@@ -1,10 +1,4 @@
 <strings>
     <string id="AppName">pope-beta</string>
-
-    <string id="prompt">Click the menu button</string>
-
-    <string id="menu_label_1">Item 1</string>
-    <string id="menu_label_2">Item 2</string>
-
     <string id="RequestAppStart">It's time. A u ready to see him?</string>
 </strings>
