@@ -6,3 +6,4 @@ vgcore.*
 *.out
 prof_*
 .ipynb_checkpoints/
+*.iq
